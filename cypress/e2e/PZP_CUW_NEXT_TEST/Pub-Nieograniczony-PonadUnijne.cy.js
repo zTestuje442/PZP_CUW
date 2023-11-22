@@ -83,8 +83,7 @@ const fruits = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape", "Str
     //     cy.get("input[name='pass']").type('Storczyk7');
     //     cy.get('button.form-button').contains('Zaloguj').click();
     // })
-
-
+    
 // Wybór jednostki
 it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('a.main-menu__link').contains('Jednostki').click();
@@ -94,7 +93,7 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('a.form-button').contains('Rozpocznij postępowanie').click();
     cy.get("input[name='nazwa']").type(procedureName);
     cy.get('button.form-button').contains('Dodaj').click();
-    cy.wait(2000)
+    cy.wait(3000)
     cy.get("input[name='numer']").type(randomProcedureNumber);
     cy.get('#appl-type').select('Nieplanowane');
     cy.get('#typ').select('Wartość zamówienia równa lub przekracza progi unijne');
@@ -109,12 +108,23 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('[au-target-id="573"]').eq(2).click();
     cy.get('#wzorpunktacji').select('XD');
     cy.get("input[name='terminmies']").type('3');
-    cy.exec('GenerateCertificates.ps1', { log: true })
+    cy.exec('GenerateCertificates.ps1', { log: true });
     cy.log(`Executing command: powershell.exe -File ${powershellScriptPath}`);
-    //cy.get('#certFileInput').selectFile({force: true},'urzad.cer')
-    cy.get('#attachmentFileInput').selectFile('urzad.cer')
-
+    cy.checkFileExist('${randomFruit}.cer', 8000).then((fileExists) => {
+      if (fileExists) {
+      } else {}
+    });
+    cy.get('*[class^="form-field form-field--files"]').find('input').eq(1).selectFile(`${randomFruit}.cer`, {force: true});
+    cy.get('[au-target-id="750"]').click();
+    //cy.get('#certFileInput').selectFile({force: true},'urzad.cer');
+    //cy.get('#attachmentFileInput').selectFile('urzad.cer');
+    // testerautomat1@gmail.com
+    // olsztynautotest@buziaczek.pl
     cy.get('button.form-button').contains('Zapisz').click();
-
+    // Publikacja
+    cy.get('[au-target-id="944"]').contains('Opublikuj').click();
+    cy.get('[au-target-id="1243"]').contains('Tak').click();
+    cy.get('[au-target-id="1009"]').contains('Opublikuj mimo to').click();
+    // KONIEC
 })
-})
+})      

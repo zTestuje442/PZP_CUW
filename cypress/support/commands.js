@@ -23,3 +23,31 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('checkFileExist', { prevSubject: false }, (path, timeout = 10000) => {
+  const checkTime = timeout / 30;
+  const delayTime = 10000; 
+  let totalTime = 0;
+
+  const checkFile = () => {
+    return cy.task('checkFileExists', path)
+      .then((fileExists) => {
+        if (fileExists) {
+          return true; 
+        }
+
+        totalTime += checkTime;
+        if (totalTime >= timeout) {
+          return false; 
+        }
+
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(checkFile()); 
+          }, checkTime);
+        });
+      });
+  };
+
+  return cy.wait(delayTime).then(() => checkFile());
+});
