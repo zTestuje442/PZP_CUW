@@ -117,6 +117,4 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('button.form-button').contains('Zapisz').click();
 
 })
-
-
 })
