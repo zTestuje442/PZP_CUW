@@ -126,7 +126,5 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('[au-target-id="1243"]').contains('Tak').click();
     cy.get('[au-target-id="1009"]').contains('Opublikuj mimo to').click();
 
-    // SKŁADANIE OFERTY X2
     
-})
 })
