@@ -61,29 +61,10 @@ const fruits = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape", "Str
 
 
     // Logowanie
-    Cypress.Commands.add('login', (username, password) => {
-        cy.visit('https://pzp-cuw-next.azurewebsites.net');
-        cy.contains("a", 'Zaloguj się').click();
-        cy.get("input[name='email']").type(username);
-        cy.get("input[name='pass']").type(password);
-        cy.get('button.form-button').click();
-        cy.get('a.main-menu__link').contains('Strona główna').click();
-        //cy.url().should('contain', '/login-successful')
-      })
-
       beforeEach(() => {
         cy.login('ztestuje442@gmail.com', 'Storczyk7');
       })
-      
-// Logowanie
-    // it('Log in', () => {
-    //     cy.visit('https://pzp-cuw-next.azurewebsites.net');
-    //     cy.contains("a", 'Zaloguj się').click();
-    //     cy.get("input[name='email']").type('ztestuje442@gmail.com');
-    //     cy.get("input[name='pass']").type('Storczyk7');
-    //     cy.get('button.form-button').contains('Zaloguj').click();
-    // })
-    
+
 // Wybór jednostki
 it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('a.main-menu__link').contains('Jednostki').click();
@@ -110,7 +91,7 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get("input[name='terminmies']").type('3');
     cy.exec('GenerateCertificates.ps1', { log: true });
     cy.log(`Executing command: powershell.exe -File ${powershellScriptPath}`);
-    cy.checkFileExist('${randomFruit}.cer', 15000).then((fileExists) => {
+    cy.checkFileExist('${randomFruit}.cer', 8000).then((fileExists) => {
       if (fileExists) {
       } else {}
     });
@@ -125,6 +106,24 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('[au-target-id="944"]').contains('Opublikuj').click();
     cy.get('[au-target-id="1243"]').contains('Tak').click();
     cy.get('[au-target-id="1009"]').contains('Opublikuj mimo to').click();
-
     
+})
+        // PUBLIKACJA KWOTY
+    it.only("Otwarcie stworzeonej oferty", () => {
+    cy.get('#image3797').click()
+    cy.get('h2').contains('Apricot').click()
+    cy.wait(3000)
+    cy.get('[au-target-id="1548"]').contains('Upublicznij kwotę brutto przeznaczoną na sfinansowanie').click();
+    cy.get("input[name='displayIntendedAmount']").type(120000);
+    cy.get('[au-target-id="2507"]').contains('Zapisz').click();
+    cy.wait(3000)
+
+        // OTWARCIE OFERT
+    
+    
+    
+    })
+    
+
+
 })

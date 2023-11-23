@@ -25,8 +25,8 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('checkFileExist', { prevSubject: false }, (path, timeout = 10000) => {
-  const checkTime = timeout / 30;
-  const delayTime = 10000; 
+  const checkTime = timeout / 10;
+  const delayTime = 6000; 
   let totalTime = 0;
 
   const checkFile = () => {
@@ -51,3 +51,12 @@ Cypress.Commands.add('checkFileExist', { prevSubject: false }, (path, timeout = 
 
   return cy.wait(delayTime).then(() => checkFile());
 });
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.visit('https://pzp-cuw-next.azurewebsites.net');
+  cy.contains("a", 'Zaloguj się').click();
+  cy.get("input[name='email']").type(username);
+  cy.get("input[name='pass']").type(password);
+  cy.get('button.form-button').click();
+  cy.get('a.main-menu__link').contains('Strona główna').click();
+})
