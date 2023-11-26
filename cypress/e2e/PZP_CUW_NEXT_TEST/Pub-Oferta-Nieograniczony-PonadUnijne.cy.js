@@ -116,13 +116,11 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('[au-target-id="1548"]').contains('Upublicznij kwotę brutto przeznaczoną na sfinansowanie').click();
     cy.get("input[name='displayIntendedAmount']").type(120000);
     cy.get('[au-target-id="2507"]').contains('Zapisz').click();
-    cy.wait(3000)
 
         // OTWARCIE OFERT
     
     
     
-    })
     
 
 
