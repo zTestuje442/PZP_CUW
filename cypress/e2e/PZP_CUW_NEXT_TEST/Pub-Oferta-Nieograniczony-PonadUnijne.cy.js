@@ -1,7 +1,4 @@
-context('Postępowanie ponad unijne - nieograniczony', () => {
-
-
-  const powershellScriptPath = 'GenerateCertificates.ps1';
+const powershellScriptPath = 'GenerateCertificates.ps1';
   
     // Generowanie numeru postępowania
     function generateRandomString() {
@@ -59,14 +56,14 @@ const fruits = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape", "Str
     const randomFruit = fruits[randomFruitIndex];
     const procedureName = `Postępowanie ponad unijne - nieograniczony ${randomFruit}`;
 
-
+context('Postępowanie ponad unijne - nieograniczony', () => {
     // Logowanie
       beforeEach(() => {
         cy.login('ztestuje442@gmail.com', 'Storczyk7');
       })
 
 // Wybór jednostki
-it('Postępowanie ponad unijne - nieograniczony', () => {
+it('Stworzenie oferty ponad unijne - nieograniczony', () => {
     cy.get('a.main-menu__link').contains('Jednostki').click();
     cy.contains('Jednostki').click();
     cy.get('a.au-target').contains('A.W.').click();
@@ -97,8 +94,7 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     });
     cy.get('*[class^="form-field form-field--files"]').find('input').eq(1).selectFile(`${randomFruit}.cer`, {force: true});
     cy.get('[au-target-id="750"]').click();
-    //cy.get('#certFileInput').selectFile({force: true},'urzad.cer');
-    //cy.get('#attachmentFileInput').selectFile('urzad.cer');
+    
     // testerautomat1@gmail.com
     // olsztynautotest@buziaczek.pl
     cy.get('button.form-button').contains('Zapisz').click();
@@ -106,24 +102,66 @@ it('Postępowanie ponad unijne - nieograniczony', () => {
     cy.get('[au-target-id="944"]').contains('Opublikuj').click();
     cy.get('[au-target-id="1243"]').contains('Tak').click();
     cy.get('[au-target-id="1009"]').contains('Opublikuj mimo to').click();
+    cy.wait(1500);
     
 })
         // PUBLIKACJA KWOTY
-    it.only("Otwarcie stworzeonej oferty", () => {
+    it("Publikacja kwoty brutto", () => {
     cy.get('#image3797').click()
-    cy.get('h2').contains('Apricot').click()
+    cy.get('h2').contains(randomFruit).click() // Dodać ${randomFruit}
     cy.wait(3000)
     cy.get('[au-target-id="1548"]').contains('Upublicznij kwotę brutto przeznaczoną na sfinansowanie').click();
     cy.get("input[name='displayIntendedAmount']").type(120000);
     cy.get('[au-target-id="2507"]').contains('Zapisz').click();
-    cy.wait(3000)
-
-        // OTWARCIE OFERT
-    
-    
-    
-    })
-    
-
+    cy.wait(1500);
+  })
 
 })
+        // ZŁOŻENIE OFERT 
+    context('Postępowanie ponad unijne - nieograniczony cd.', () => {
+    
+    it("Złożenie oferty", () => {
+   
+    cy.visit('https://pzp-cuw-next.azurewebsites.net');
+    cy.contains("a", 'Zaloguj się').click();
+    cy.get("input[name='email']").type('testerolsztynwyk1@op.pl');
+    cy.get("input[name='pass']").type('Ponczek123!');
+    cy.get('button.form-button').click();
+    cy.get('a.main-menu__link').contains('Strona główna').click();
+    cy.get('#image3797').click();
+    cy.get('h2').contains(randomFruit).click(); // Dodać ${randomFruit}.cer
+    //cy.get('select').select(1);
+    cy.get('button.form-button').contains('Dodaj ofertę').click();
+    cy.get("input[name='token']").type('a');
+    cy.get('button.form-button').contains('Dodaj ofertę').click();
+    //cy.get('[au-target-id="356"]').click();
+    cy.get('*[class^="form-field form-field--files"]').find('input').eq(0).selectFile(`Formularz ofertowy zal. nr 1do SIWZ.doc`, {force: true});
+    cy.get('button.form-button').contains('Zapisz').click();
+    cy.get("input[name='token']").type('a');
+    cy.get('button.form-button').contains('Dodaj').click();
+    cy.wait(2000);
+    cy.get('button.form-button').contains('Złóż ofertę').click();
+    cy.get('*[class^="modal-dialog"]').find('input').type('a');
+    cy.wait(15000);
+    cy.get('button.form-button').contains('Tak').click();
+  })
+})  
+  
+  // OTWARCIE OFERT
+  context('Postępowanie ponad unijne - nieograniczony cd-2.', () => {
+
+    beforeEach(() => {
+          cy.login('ztestuje442@gmail.com', 'Storczyk7');
+        })
+    
+    it("Otwarcie stworzeonej oferty", () => {
+    cy.get('#image3797').click();
+    cy.get('h2').contains(randomFruit).click(); // Dodać ${randomFruit}
+    cy.get('[au-target-id="1540"]').contains('Otwórz oferty').click();
+    cy.get('#commOpen').select('Komisja 1');
+    cy.get('*[class^="form-button au-target"]').find('input').selectFile(`${randomFruit}.pfx`, {force: true}); // dodać ${randomFruit}.cer
+    cy.get('*[class^="grid-line"]').find("input[id='hasloField']").type('a');
+    cy.get('[au-target-id="2527"]').contains('Otwórz oferty').click();
+  })
+})
+
