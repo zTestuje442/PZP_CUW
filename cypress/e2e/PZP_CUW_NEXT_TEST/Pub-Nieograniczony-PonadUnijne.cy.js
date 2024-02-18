@@ -63,11 +63,11 @@ const fruits = ["Apple", "Banana", "Orange", "Mango", "Pineapple", "Grape", "Str
     // Logowanie
     Cypress.Commands.add('login', (username, password) => {
         cy.visit('https://pzp-cuw-next.azurewebsites.net');
-        cy.contains("a", 'Zaloguj się').click();
+        cy.contains("a", 'Zaloguj się').click({force: true});
         cy.get("input[name='email']").type(username);
         cy.get("input[name='pass']").type(password);
         cy.get('button.form-button').click();
-        cy.get('a.main-menu__link').contains('Strona główna').click();
+        cy.get('a.main-menu__link').contains('Strona główna').click({force: true});
         //cy.url().should('contain', '/login-successful')
       })
 

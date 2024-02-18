@@ -68,7 +68,7 @@ it('Stworzenie oferty ponad unijne - nieograniczony', () => {
     cy.contains('Jednostki').click();
     cy.get('a.au-target').contains('A.W.').click();
     cy.get('a.au-target').contains('Projekty postępowań').click();
-    cy.get('a.form-button').contains('Rozpocznij postępowanie').click();
+    cy.get('a.form-button').contains('Rozpocznij postępowanie').click({force: true});
     cy.get("input[name='nazwa']").type(procedureName);
     cy.get('button.form-button').contains('Dodaj').click();
     cy.wait(3000)
@@ -81,9 +81,9 @@ it('Stworzenie oferty ponad unijne - nieograniczony', () => {
     cy.get('#przedmiotzamowienia').type('Testowy przedmiot zamówienia Tego typu BENC asdas asasas');
     cy.get('#opis').type('Opis Testowego postepowania - Przetarg nieograniczony - ponad unijne');
     cy.get('#terminskladania').type(futureDateFormatted);
-    cy.get('[au-target-id="569"]').first({multiple: true}).type('355');
-    cy.get('[au-target-id="570"]').first().click();
-    cy.get('[au-target-id="573"]').eq(2).click();
+    cy.get('[au-target-id="572"]').first({multiple: true}).type('355');
+    cy.get('[au-target-id="573"]').first().click();
+    cy.get('[au-target-id="576"]').eq(2).click();
     cy.get('#wzorpunktacji').select('XD');
     cy.get("input[name='terminmies']").type('3');
     cy.exec('GenerateCertificates.ps1', { log: true });
@@ -93,15 +93,13 @@ it('Stworzenie oferty ponad unijne - nieograniczony', () => {
       } else {}
     });
     cy.get('*[class^="form-field form-field--files"]').find('input').eq(1).selectFile(`${randomFruit}.cer`, {force: true});
-    cy.get('[au-target-id="750"]').click();
+    cy.get('[au-target-id="753"]').click();
     
-    // testerautomat1@gmail.com
-    // olsztynautotest@buziaczek.pl
     cy.get('button.form-button').contains('Zapisz').click();
         // Publikacja
-    cy.get('[au-target-id="944"]').contains('Opublikuj').click();
-    cy.get('[au-target-id="1243"]').contains('Tak').click();
-    cy.get('[au-target-id="1009"]').contains('Opublikuj mimo to').click();
+    cy.get('[au-target-id="947"]').contains('Opublikuj').click();
+    cy.get('[au-target-id="1246"]').contains('Tak').click();
+    cy.get('[au-target-id="1012"]').contains('Opublikuj mimo to').click();
     cy.wait(1500);
     
 })
