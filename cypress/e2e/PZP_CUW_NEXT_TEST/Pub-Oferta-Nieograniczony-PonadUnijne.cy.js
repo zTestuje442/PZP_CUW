@@ -63,7 +63,7 @@ context('Postępowanie ponad unijne - nieograniczony', () => {
       })
 
 // Wybór jednostki
-it('Stworzenie oferty ponad unijne - nieograniczony', () => {
+it.only('Stworzenie oferty ponad unijne - nieograniczony', () => {
     cy.get('a.main-menu__link').contains('Jednostki').click();
     cy.contains('Jednostki').click();
     cy.get('a.au-target').contains('A.W.').click();
@@ -97,9 +97,9 @@ it('Stworzenie oferty ponad unijne - nieograniczony', () => {
     
     cy.get('button.form-button').contains('Zapisz').click();
         // Publikacja
-    cy.get('[au-target-id="947"]').contains('Opublikuj').click();
-    cy.get('[au-target-id="1246"]').contains('Tak').click();
-    cy.get('[au-target-id="1012"]').contains('Opublikuj mimo to').click();
+    cy.get('[au-target-id="533"]').contains('Opublikuj').click();
+    cy.get('[au-target-id="832"]').contains('Tak').click();
+    cy.get('[au-target-id="598"]').contains('Opublikuj mimo to').click();
     cy.wait(1500);
     
 })
